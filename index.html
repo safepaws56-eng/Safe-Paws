@@ -1,474 +1,1320 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" class="h-full scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safe Paws - Refugio Interactivo</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Paws - Refugio Interactivo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Sniglet:wght@400;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Sniglet:wght@400;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- html2canvas Library for downloading the certificate as image -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- html2canvas Library for downloading the certificate as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'soft-pink': '#FFD1DC',
-                        'bubble-pink': '#FF85A1',
-                        'bright-pink': '#FF3366',
-                        'cream': '#FFF0F5',
-                        'pastel-lavender': '#E6E6FA',
-                        'pastel-mint': '#E0F8E9',
-                        'pastel-yellow': '#FFF9C4',
-                        'cozy-wood': '#D7CCC8',
-                        'cozy-roof': '#FF6B8B'
-                    },
-                    fontFamily: {
-                        sniglet: ['Sniglet', 'cursive'],
-                        fredoka: ['Fredoka', 'sans-serif'],
-                        quicksand: ['Quicksand', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'cute': '0 10px 25px -5px rgba(255, 133, 161, 0.4), 0 8px 10px -6px rgba(255, 133, 161, 0.2)',
-                        'bubble': 'inset -4px -4px 10px rgba(0,0,0,0.05), inset 4px 4px 10px rgba(255,255,255,0.8), 0 10px 20px rgba(255, 133, 161, 0.25)',
-                        'glow': '0 0 20px rgba(255, 133, 161, 0.6)'
-                    }
-                }
-            }
-        }
-    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soft-pink': '#FFD1DC',
+                        'bubble-pink': '#FF85A1',
+                        'bright-pink': '#FF3366',
+                        'cream': '#FFF0F5',
+                        'pastel-lavender': '#E6E6FA',
+                        'pastel-mint': '#E0F8E9',
+                        'pastel-yellow': '#FFF9C4',
+                        'cozy-wood': '#D7CCC8',
+                        'cozy-roof': '#FF6B8B'
+                    },
+                    fontFamily: {
+                        sniglet: ['Sniglet', 'cursive'],
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'cute': '0 10px 25px -5px rgba(255, 133, 161, 0.4), 0 8px 10px -6px rgba(255, 133, 161, 0.2)',
+                        'bubble': 'inset -4px -4px 10px rgba(0,0,0,0.05), inset 4px 4px 10px rgba(255,255,255,0.8), 0 10px 20px rgba(255, 133, 161, 0.25)',
+                        'glow': '0 0 20px rgba(255, 133, 161, 0.6)'
+                    }
+                }
+            }
+        }
+    </script>
 
-    <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #FFF0F5 0%, #FFDEEB 50%, #F3E5F5 100%);
-            overflow-x: hidden;
-        }
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFDEEB 50%, #F3E5F5 100%);
+            overflow-x: hidden;
+        }
 
-        .font-bubble {
-            font-family: 'Sniglet', cursive;
-        }
+        .font-bubble {
+            font-family: 'Sniglet', cursive;
+        }
 
-        .title-3d {
-            font-family: 'Sniglet', cursive;
-            color: #FF2A6D;
-            text-shadow: 
-                3px 3px 0px #FFFFFF,
-                6px 6px 0px #FF85A1,
-                9px 9px 15px rgba(255, 42, 109, 0.3);
-        }
+        .title-3d {
+            font-family: 'Sniglet', cursive;
+            color: #FF2A6D;
+            text-shadow: 
+                3px 3px 0px #FFFFFF,
+                6px 6px 0px #FF85A1,
+                9px 9px 15px rgba(255, 42, 109, 0.3);
+        }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border: 3px solid rgba(255, 255, 255, 0.95);
-        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 3px solid rgba(255, 255, 255, 0.95);
+        }
 
-        .animate-fade-in-up {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        .btn-bounce {
-            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease;
-        }
-        .btn-bounce:hover {
-            transform: translateY(-3px) scale(1.02);
-        }
-        .btn-bounce:active {
-            transform: translateY(1px) scale(0.97);
-        }
+        .btn-bounce {
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease;
+        }
+        .btn-bounce:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+        .btn-bounce:active {
+            transform: translateY(1px) scale(0.97);
+        }
 
-        .floating-element {
-            animation: float 4s ease-in-out infinite;
-        }
+        .floating-element {
+            animation: float 4s ease-in-out infinite;
+        }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1.5deg); }
-        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
+        }
 
-        .pulse-soft {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
+        .pulse-soft {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
 
-        @keyframes pulseGlow {
-            0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 133, 161, 0.4)); }
-            50% { filter: drop-shadow(0 0 16px rgba(255, 133, 161, 0.8)); }
-        }
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 133, 161, 0.4)); }
+            50% { filter: drop-shadow(0 0 16px rgba(255, 133, 161, 0.8)); }
+        }
 
-        .tab-btn {
-            transition: all 0.25s ease;
-        }
-        .tab-btn.active {
-            background-color: #FF3366;
-            color: #FFFFFF;
-            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
-            transform: translateY(-2px);
-        }
+        .tab-btn {
+            transition: all 0.25s ease;
+        }
+        .tab-btn.active {
+            background-color: #FF3366;
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            transform: translateY(-2px);
+        }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FFF0F5;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #FF85A1;
-            border-radius: 20px;
-        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF85A1;
+            border-radius: 20px;
+        }
 
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-certificate, #printable-certificate * {
-                visibility: visible;
-            }
-            #printable-certificate {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 20px;
-            }
-        }
-    </style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-800 selection:bg-bubble-pink selection:text-white">
 
-    <header class="sticky top-0 z-50 px-4 py-3 glass-card shadow-sm rounded-b-3xl transition-all duration-300">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('tab-inicio')">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-bubble-pink to-bright-pink flex items-center justify-center text-white text-2xl shadow-cute pulse-soft">
-                    🐾
-                </div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-bold font-bubble text-bright-pink tracking-wide">Safe Paws</h1>
-                    <p class="text-xs text-pink-500 font-semibold">El Refugio de Doggy y Perritos Vulnerables</p>
-                </div>
-            </div>
+    <header class="sticky top-0 z-50 px-4 py-3 glass-card shadow-sm rounded-b-3xl transition-all duration-300">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('tab-inicio')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-bubble-pink to-bright-pink flex items-center justify-center text-white text-2xl shadow-cute pulse-soft">
+                    🐾
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold font-bubble text-bright-pink tracking-wide">Safe Paws</h1>
+                    <p class="text-xs text-pink-500 font-semibold">El Refugio de Doggy y Perritos Vulnerables</p>
+                </div>
+            </div>
 
-            <!-- Tab Buttons Row including new ODS tab -->
-            <nav class="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                <button onclick="switchTab('tab-inicio')" id="btn-tab-inicio" class="tab-btn active px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🏠 Inicio & Causa</button>
-                <button onclick="switchTab('tab-simulador')" id="btn-tab-simulador" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🎮 Simulador 3D</button>
-                <button onclick="switchTab('tab-doggy')" id="btn-tab-doggy" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🐶 Pregúntale a Doggy</button>
-                <button onclick="switchTab('tab-circuito')" id="btn-tab-circuito" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">⚡ Circuito</button>
-                <button onclick="switchTab('tab-ciencia')" id="btn-tab-ciencia" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🧪 Ciencia & Física</button>
-                <button onclick="switchTab('tab-ods')" id="btn-tab-ods" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🌍 ODS y Planeta</button>
-                <button onclick="switchTab('tab-compromiso')" id="btn-tab-compromiso" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">📜 Mi Compromiso</button>
-            </nav>
-        </div>
-    </header>
+            <!-- Tab Buttons Row including new ODS tab -->
+            <nav class="flex flex-wrap justify-center gap-1.5 md:gap-2">
+                <button onclick="switchTab('tab-inicio')" id="btn-tab-inicio" class="tab-btn active px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🏠 Inicio & Causa</button>
+                <button onclick="switchTab('tab-simulador')" id="btn-tab-simulador" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🎮 Simulador 3D</button>
+                <button onclick="switchTab('tab-doggy')" id="btn-tab-doggy" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🐶 Pregúntale a Doggy</button>
+                <button onclick="switchTab('tab-circuito')" id="btn-tab-circuito" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">⚡ Circuito</button>
+                <button onclick="switchTab('tab-ciencia')" id="btn-tab-ciencia" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🧪 Ciencia & Física</button>
+                <button onclick="switchTab('tab-ods')" id="btn-tab-ods" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">🌍 ODS y Planeta</button>
+                <button onclick="switchTab('tab-compromiso')" id="btn-tab-compromiso" class="tab-btn px-3 py-2 rounded-full font-bold text-pink-600 hover:bg-pink-100 text-xs md:text-sm">📜 Mi Compromiso</button>
+            </nav>
+        </div>
+    </header>
 
-    <!-- MAIN TAB CONTENT CONTAINER -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+    <!-- MAIN TAB CONTENT CONTAINER -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
 
-        <!-- TAB 1: INICIO & PROBLEMÁTICA -->
-        <section id="tab-inicio" class="tab-content animate-fade-in-up space-y-8">
-            <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100 border border-pink-200 text-pink-600 text-xs font-bold mb-4 shadow-sm floating-element">
-                    <span>✨ ¡Bienvenido a Safe Paws con Doggy! ✨</span>
-                </div>
-                <h2 class="text-5xl md:text-7xl font-extrabold title-3d tracking-wide mb-4">Safe Paws</h2>
-                <p class="text-base md:text-xl text-gray-700 font-medium leading-relaxed">
-                    Un proyecto educativo e innovador diseñado para concientizar sobre la protección de animales vulnerables mediante tecnología, ciencia y empatía.
-                </p>
-            </div>
+        <!-- TAB 1: INICIO & PROBLEMÁTICA -->
+        <section id="tab-inicio" class="tab-content animate-fade-in-up space-y-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100 border border-pink-200 text-pink-600 text-xs font-bold mb-4 shadow-sm floating-element">
+                    <span>✨ ¡Bienvenido a Safe Paws con Doggy! ✨</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-extrabold title-3d tracking-wide mb-4">Safe Paws</h2>
+                <p class="text-base md:text-xl text-gray-700 font-medium leading-relaxed">
+                    Un proyecto educativo e innovador diseñado para concientizar sobre la protección de animales vulnerables mediante tecnología, ciencia y empatía.
+                </p>
+            </div>
 
-            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white bg-gradient-to-br from-rose-50 to-pink-50">
-                <div class="flex flex-col md:flex-row gap-8 items-center">
-                    <div class="w-full md:w-1/2 space-y-4">
-                        <span class="px-3 py-1 bg-bright-pink text-white text-xs font-bold rounded-full uppercase tracking-wider">Perritos en Situación de Calle</span>
-                        <h3 class="text-3xl font-extrabold font-bubble text-gray-800">Un Refugio Comunitario para Quienes Más lo Necesitan</h3>
-                        <p class="text-sm text-gray-700 leading-relaxed font-medium">
-                            En muchísimas partes del mundo, millones de perritos que viven en la calle enfrentan a diario heladas extremas, lluvias torrenciales y olas de calor sin un lugar seguro donde resguardarse.
-                        </p>
-                        <p class="text-sm text-gray-700 leading-relaxed font-medium">
-                            Este proyecto está pensado para proteger a cualquier perro, pero especialmente a aquellos perritos sin hogar. La visión de Safe Paws es instalar casitas comunitarias en parques y calles para que los perritos de la calle tengan siempre un refugio donde protegerse del clima extremo.
-                        </p>
-                    </div>
+            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white bg-gradient-to-br from-rose-50 to-pink-50">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="px-3 py-1 bg-bright-pink text-white text-xs font-bold rounded-full uppercase tracking-wider">Perritos en Situación de Calle</span>
+                        <h3 class="text-3xl font-extrabold font-bubble text-gray-800">Un Refugio Comunitario para Quienes Más lo Necesitan</h3>
+                        <p class="text-sm text-gray-700 leading-relaxed font-medium">
+                            En muchísimas partes del mundo, millones de perritos que viven en la calle enfrentan a diario heladas extremas, lluvias torrenciales y olas de calor sin un lugar seguro donde resguardarse.
+                        </p>
+                        <p class="text-sm text-gray-700 leading-relaxed font-medium">
+                            Este proyecto está pensado para proteger a cualquier perro, pero especialmente a aquellos perritos sin hogar. La visión de Safe Paws es instalar casitas comunitarias en parques y calles para que los perritos de la calle tengan siempre un refugio donde protegerse del clima extremo.
+                        </p>
+                    </div>
 
-                    <div class="w-full md:w-1/2 bg-white rounded-3xl p-6 border-2 border-pink-200 shadow-sm space-y-4">
-                        <div class="flex items-center gap-3 text-pink-600 font-bold font-bubble text-lg">
-                            <span class="text-3xl">🏠</span>
-                            <span>Nuestra Propuesta: Refugios Seguros</span>
-                        </div>
-                        <p class="text-xs text-gray-600 leading-relaxed font-medium">
-                            Safe Paws integra sensores ambientales (DHT11), monitoreo automatizado (ESP32) y pantallas de alerta para que la comunidad sepa exactamente cuándo un perrito necesita ayuda adicional (mantas, agua fresca o abrigo humano).
-                        </p>
-                        <div class="p-3 bg-pink-100/70 rounded-2xl text-xs font-semibold text-pink-800 border border-pink-200 flex items-center gap-2">
-                            <span>💡</span>
-                            <span>¡Aprende cómo funciona en el simulador 3D y súmate a la causa!</span>
-                        </div>
-                        <button onclick="switchTab('tab-simulador')" class="w-full py-3 rounded-2xl bg-bright-pink text-white font-bold font-bubble text-sm shadow-md btn-bounce">
-                            ¡Probar Simulador Interactivo 3D! 🚀
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    <div class="w-full md:w-1/2 bg-white rounded-3xl p-6 border-2 border-pink-200 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3 text-pink-600 font-bold font-bubble text-lg">
+                            <span class="text-3xl">🏠</span>
+                            <span>Nuestra Propuesta: Refugios Seguros</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed font-medium">
+                            Safe Paws integra sensores ambientales (DHT11), monitoreo automatizado (ESP32) y pantallas de alerta para que la comunidad sepa exactamente cuándo un perrito necesita ayuda adicional (mantas, agua fresca o abrigo humano).
+                        </p>
+                        <div class="p-3 bg-pink-100/70 rounded-2xl text-xs font-semibold text-pink-800 border border-pink-200 flex items-center gap-2">
+                            <span>💡</span>
+                            <span>¡Aprende cómo funciona en el simulador 3D y súmate a la causa!</span>
+                        </div>
+                        <button onclick="switchTab('tab-simulador')" class="w-full py-3 rounded-2xl bg-bright-pink text-white font-bold font-bubble text-sm shadow-md btn-bounce">
+                            ¡Probar Simulador Interactivo 3D! 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- TAB 2: SIMULADOR 3D -->
-        <section id="tab-simulador" class="tab-content hidden animate-fade-in-up space-y-8">
-            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white relative">
-                <div class="flex flex-col lg:flex-row gap-8 items-center">
-                    
-                    <!-- 3D Canvas Area -->
-                    <div class="w-full lg:w-7/12 h-[420px] md:h-[480px] rounded-3xl bg-gradient-to-b from-sky-200 via-pink-50 to-emerald-100 relative overflow-hidden border-2 border-pink-200 shadow-inner flex items-center justify-center" id="canvas-wrapper">
-                        <div id="canvas-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
-                        
-                        <div class="absolute top-4 left-4 glass-card px-3 py-1.5 rounded-2xl text-xs font-bold text-pink-600 shadow-sm flex items-center gap-2 z-10 pointer-events-none">
-                            <span>🖱️ Arrastra para girar la casita</span>
-                        </div>
+        <!-- TAB 2: SIMULADOR 3D -->
+        <section id="tab-simulador" class="tab-content hidden animate-fade-in-up space-y-8">
+            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white relative">
+                <div class="flex flex-col lg:flex-row gap-8 items-center">
+                    
+                    <!-- 3D Canvas Area -->
+                    <div class="w-full lg:w-7/12 h-[420px] md:h-[480px] rounded-3xl bg-gradient-to-b from-sky-200 via-pink-50 to-emerald-100 relative overflow-hidden border-2 border-pink-200 shadow-inner flex items-center justify-center" id="canvas-wrapper">
+                        <div id="canvas-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+                        
+                        <div class="absolute top-4 left-4 glass-card px-3 py-1.5 rounded-2xl text-xs font-bold text-pink-600 shadow-sm flex items-center gap-2 z-10 pointer-events-none">
+                            <span>🖱️ Arrastra para girar la casita</span>
+                        </div>
 
-                        <!-- Weather Atmosphere Indicator -->
-                        <div id="weather-badge" class="absolute top-4 right-4 glass-card px-4 py-2 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 z-10 text-amber-600">
-                            <span id="weather-icon">☀️</span>
-                            <span id="weather-text">Clima Soleado</span>
-                        </div>
+                        <!-- Weather Atmosphere Indicator -->
+                        <div id="weather-badge" class="absolute top-4 right-4 glass-card px-4 py-2 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 z-10 text-amber-600">
+                            <span id="weather-icon">☀️</span>
+                            <span id="weather-text">Clima Soleado</span>
+                        </div>
 
-                        <!-- OLED Display Embedded Overlay -->
-                        <div class="absolute bottom-4 left-4 glass-card p-3.5 rounded-2xl border-2 border-pink-200 shadow-md max-w-[210px] z-10">
-                            <div class="text-[10px] uppercase font-bold text-pink-500 tracking-wider">Pantalla OLED Lateral en Casita</div>
-                            <div id="oled-temp" class="text-xs font-mono font-bold text-pink-700 mt-1">TEMP: 22.0°C</div>
-                            <div id="oled-hum" class="text-xs font-mono font-bold text-purple-700">HUM : 55 %</div>
-                            <div id="oled-status" class="mt-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 inline-block">ESTADO: CONFORT</div>
-                        </div>
-                    </div>
+                        <!-- OLED Display Embedded Overlay -->
+                        <div class="absolute bottom-4 left-4 glass-card p-3.5 rounded-2xl border-2 border-pink-200 shadow-md max-w-[210px] z-10">
+                            <div class="text-[10px] uppercase font-bold text-pink-500 tracking-wider">Pantalla OLED Lateral en Casita</div>
+                            <div id="oled-temp" class="text-xs font-mono font-bold text-pink-700 mt-1">TEMP: 22.0°C</div>
+                            <div id="oled-hum" class="text-xs font-mono font-bold text-purple-700">HUM : 55 %</div>
+                            <div id="oled-status" class="mt-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 inline-block">ESTADO: CONFORT</div>
+                        </div>
+                    </div>
 
-                    <!-- Interactive Controls & Status -->
-                    <div class="w-full lg:w-5/12 space-y-6">
-                        <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-6 rounded-3xl border-2 border-pink-200">
-                            <div class="flex justify-between items-center mb-3">
-                                <label for="temp-slider" class="text-sm font-bold text-gray-700 font-bubble">Controlador de Clima</label>
-                                <span id="temp-display" class="text-2xl font-extrabold font-bubble text-bright-pink bg-white px-4 py-1 rounded-2xl shadow-sm border border-pink-200">22.0 °C</span>
-                            </div>
+                    <!-- Interactive Controls & Status -->
+                    <div class="w-full lg:w-5/12 space-y-6">
+                        <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-6 rounded-3xl border-2 border-pink-200">
+                            <div class="flex justify-between items-center mb-3">
+                                <label for="temp-slider" class="text-sm font-bold text-gray-700 font-bubble">Controlador de Clima</label>
+                                <span id="temp-display" class="text-2xl font-extrabold font-bubble text-bright-pink bg-white px-4 py-1 rounded-2xl shadow-sm border border-pink-200">22.0 °C</span>
+                            </div>
 
-                            <input type="range" id="temp-slider" min="5" max="38" step="0.5" value="22" class="w-full h-3 bg-pink-200 rounded-lg appearance-none cursor-pointer accent-bright-pink">
+                            <input type="range" id="temp-slider" min="5" max="38" step="0.5" value="22" class="w-full h-3 bg-pink-200 rounded-lg appearance-none cursor-pointer accent-bright-pink">
 
-                            <div class="flex justify-between text-xs font-bold text-pink-500 mt-2">
-                                <span>❄️ 5°C (Frío)</span>
-                                <span>🌸 22°C (Ideal)</span>
-                                <span>☀️ 38°C (Calor)</span>
-                            </div>
+                            <div class="flex justify-between text-xs font-bold text-pink-500 mt-2">
+                                <span>❄️ 5°C (Frío)</span>
+                                <span>🌸 22°C (Ideal)</span>
+                                <span>☀️ 38°C (Calor)</span>
+                            </div>
 
-                            <div class="grid grid-cols-3 gap-2 mt-4">
-                                <button onclick="setTemp(10)" class="py-2.5 rounded-xl bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-bold transition-all shadow-sm btn-bounce">Lluvia y Frío ❄️</button>
-                                <button onclick="setTemp(22)" class="py-2.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-700 text-xs font-bold transition-all shadow-sm btn-bounce">Templado 🌸</button>
-                                <button onclick="setTemp(33)" class="py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-700 text-xs font-bold transition-all shadow-sm btn-bounce">Calor ☀️</button>
-                            </div>
-                        </div>
+                            <div class="grid grid-cols-3 gap-2 mt-4">
+                                <button onclick="setTemp(10)" class="py-2.5 rounded-xl bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-bold transition-all shadow-sm btn-bounce">Lluvia y Frío ❄️</button>
+                                <button onclick="setTemp(22)" class="py-2.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-700 text-xs font-bold transition-all shadow-sm btn-bounce">Templado 🌸</button>
+                                <button onclick="setTemp(33)" class="py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-700 text-xs font-bold transition-all shadow-sm btn-bounce">Calor ☀️</button>
+                            </div>
+                        </div>
 
-                        <div id="status-card" class="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-800 text-sm font-medium transition-all">
-                            <div id="status-text">
-                                🌸 <b>Clima Ideal:</b> La temperatura ambiente es perfecta para un perrito.
-                            </div>
-                        </div>
+                        <div id="status-card" class="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-800 text-sm font-medium transition-all">
+                            <div id="status-text">
+                                🌸 <b>Clima Ideal:</b> La temperatura ambiente es perfecta para un perrito.
+                            </div>
+                        </div>
 
-                        <div class="bg-white p-4 rounded-2xl border-2 border-pink-200 shadow-sm relative">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm overflow-hidden">
-                                    🐶
-                                </div>
-                                <div>
-                                    <div class="text-xs font-bold text-pink-500 uppercase tracking-wider">Doggy dice:</div>
-                                    <div id="doggy-thought" class="text-xs font-bold text-gray-700 italic mt-0.5">
-                                        "¡Me siento de maravilla! 🌸 La temperatura está perfecta para una siestita suave."
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <div class="bg-white p-4 rounded-2xl border-2 border-pink-200 shadow-sm relative">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm overflow-hidden">
+                                    🐶
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-pink-500 uppercase tracking-wider">Doggy dice:</div>
+                                    <div id="doggy-thought" class="text-xs font-bold text-gray-700 italic mt-0.5">
+                                        "¡Me siento de maravilla! 🌸 La temperatura está perfecta para una siestita suave."
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Detailed Temperature Safety Breakdown -->
-            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white space-y-6">
-                <div class="text-center max-w-2xl mx-auto">
-                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Guía de Cuidado Humano y Salud</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold font-bubble text-gray-800 mt-2">¿Por qué cada temperatura requiere atención humana?</h3>
-                    <p class="text-gray-600 text-xs md:text-sm font-medium mt-1">
-                        La casita brinda resguardo del viento y la lluvia a perritos de la calle. ¡Descubre cómo debemos actuar los humanos en cada clima!
-                    </p>
-                </div>
+            <!-- Detailed Temperature Safety Breakdown -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white space-y-6">
+                <div class="text-center max-w-2xl mx-auto">
+                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Guía de Cuidado Humano y Salud</span>
+                    <h3 class="text-2xl md:text-3xl font-extrabold font-bubble text-gray-800 mt-2">¿Por qué cada temperatura requiere atención humana?</h3>
+                    <p class="text-gray-600 text-xs md:text-sm font-medium mt-1">
+                        La casita brinda resguardo del viento y la lluvia a perritos de la calle. ¡Descubre cómo debemos actuar los humanos en cada clima!
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div id="card-range-cold" class="p-5 rounded-2xl border-2 border-blue-200 bg-blue-50/70 transition-all space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl">❄️</span>
-                            <span class="px-2.5 py-1 bg-blue-200 text-blue-800 rounded-full text-xs font-extrabold">Menos de 15°C</span>
-                        </div>
-                        <h4 class="font-bold text-blue-900 font-bubble text-lg">Frío Extremo y Lluvia</h4>
-                        <p class="text-xs text-blue-800 leading-relaxed font-medium">
-                            <b>¿Por qué es peligroso?</b> Los perritos pierden calor rápidamente al mojar su pelaje. Por debajo de 15°C sufren hipotermia, temblores y neumonía si no están protegidos.
-                        </p>
-                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-blue-700 border border-blue-200">
-                            🧥 <b>Ayuda Humana Requerida:</b> ¡La casita frena el viento! Los humanos debemos aportar mantas o cobijas para abrigarlos en el refugio.
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div id="card-range-cold" class="p-5 rounded-2xl border-2 border-blue-200 bg-blue-50/70 transition-all space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl">❄️</span>
+                            <span class="px-2.5 py-1 bg-blue-200 text-blue-800 rounded-full text-xs font-extrabold">Menos de 15°C</span>
+                        </div>
+                        <h4 class="font-bold text-blue-900 font-bubble text-lg">Frío Extremo y Lluvia</h4>
+                        <p class="text-xs text-blue-800 leading-relaxed font-medium">
+                            <b>¿Por qué es peligroso?</b> Los perritos pierden calor rápidamente al mojar su pelaje. Por debajo de 15°C sufren hipotermia, temblores y neumonía si no están protegidos.
+                        </p>
+                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-blue-700 border border-blue-200">
+                            🧥 <b>Ayuda Humana Requerida:</b> ¡La casita frena el viento! Los humanos debemos aportar mantas o cobijas para abrigarlos en el refugio.
+                        </div>
+                    </div>
 
-                    <div id="card-range-comfort" class="p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/70 transition-all space-y-3 ring-2 ring-emerald-400">
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl">🌸</span>
-                            <span class="px-2.5 py-1 bg-emerald-200 text-emerald-800 rounded-full text-xs font-extrabold">15°C a 25°C</span>
-                        </div>
-                        <h4 class="font-bold text-emerald-900 font-bubble text-lg">Zona de Confort Ideal</h4>
-                        <p class="text-xs text-emerald-800 leading-relaxed font-medium">
-                            <b>¿Por qué es perfecto?</b> Es la temperatura metabólica neutra. El perro no gasta energía intentando temblar ni jadeando excesivamente.
-                        </p>
-                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-emerald-700 border border-emerald-200">
-                            ✅ <b>Estado Ideal:</b> La casita ofrece la sombra y tranquilidad idónea para que descansen felices.
-                        </div>
-                    </div>
+                    <div id="card-range-comfort" class="p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/70 transition-all space-y-3 ring-2 ring-emerald-400">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl">🌸</span>
+                            <span class="px-2.5 py-1 bg-emerald-200 text-emerald-800 rounded-full text-xs font-extrabold">15°C a 25°C</span>
+                        </div>
+                        <h4 class="font-bold text-emerald-900 font-bubble text-lg">Zona de Confort Ideal</h4>
+                        <p class="text-xs text-emerald-800 leading-relaxed font-medium">
+                            <b>¿Por qué es perfecto?</b> Es la temperatura metabólica neutra. El perro no gasta energía intentando temblar ni jadeando excesivamente.
+                        </p>
+                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-emerald-700 border border-emerald-200">
+                            ✅ <b>Estado Ideal:</b> La casita ofrece la sombra y tranquilidad idónea para que descansen felices.
+                        </div>
+                    </div>
 
-                    <div id="card-range-hot" class="p-5 rounded-2xl border-2 border-amber-200 bg-amber-50/70 transition-all space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl">☀️</span>
-                            <span class="px-2.5 py-1 bg-amber-200 text-amber-800 rounded-full text-xs font-extrabold">Más de 25°C</span>
-                        </div>
-                        <h4 class="font-bold text-amber-900 font-bubble text-lg">Calor Sofocante</h4>
-                        <p class="text-xs text-amber-800 leading-relaxed font-medium">
-                            <b>¿Por qué es peligroso?</b> Los perros no sudan por la piel; solo transpiran por las almohadillas. Al subir la temperatura sufren golpes de calor y deshidratación.
-                        </p>
-                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-amber-700 border border-amber-200">
-                            💧 <b>Ayuda Humana Requerida:</b> La casita les da sombra, pero los humanos debemos colocar tazones de agua fresca limpia cerca.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    <div id="card-range-hot" class="p-5 rounded-2xl border-2 border-amber-200 bg-amber-50/70 transition-all space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl">☀️</span>
+                            <span class="px-2.5 py-1 bg-amber-200 text-amber-800 rounded-full text-xs font-extrabold">Más de 25°C</span>
+                        </div>
+                        <h4 class="font-bold text-amber-900 font-bubble text-lg">Calor Sofocante</h4>
+                        <p class="text-xs text-amber-800 leading-relaxed font-medium">
+                            <b>¿Por qué es peligroso?</b> Los perros no sudan por la piel; solo transpiran por las almohadillas. Al subir la temperatura sufren golpes de calor y deshidratación.
+                        </p>
+                        <div class="p-2 bg-white/80 rounded-xl text-[11px] font-bold text-amber-700 border border-amber-200">
+                            💧 <b>Ayuda Humana Requerida:</b> La casita les da sombra, pero los humanos debemos colocar tazones de agua fresca limpia cerca.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- TAB 3: PREGÚNTALE A DOGGY -->
-        <section id="tab-doggy" class="tab-content hidden animate-fade-in-up">
-            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white">
-                <div class="text-center mb-6">
-                    <span class="text-xs font-bold text-bright-pink uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Asistente Virtual</span>
-                    <h3 class="text-3xl md:text-4xl font-extrabold font-bubble text-gray-800 mt-2">Pregúntale a Doggy</h3>
-                    <p class="text-gray-600 mt-1 text-sm font-medium">Doggy responde tus preguntas sobre física, sensores, el frío o cómo ayudar a los perritos de la calle.</p>
-                </div>
+        <!-- TAB 3: PREGÚNTALE A DOGGY -->
+        <section id="tab-doggy" class="tab-content hidden animate-fade-in-up">
+            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white">
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold text-bright-pink uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Asistente Virtual</span>
+                    <h3 class="text-3xl md:text-4xl font-extrabold font-bubble text-gray-800 mt-2">Pregúntale a Doggy</h3>
+                    <p class="text-gray-600 mt-1 text-sm font-medium">Doggy responde tus preguntas sobre física, sensores, el frío o cómo ayudar a los perritos de la calle.</p>
+                </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <div class="lg:col-span-4 bg-gradient-to-b from-amber-50 to-pink-50 rounded-3xl p-6 border-2 border-pink-200 text-center flex flex-col items-center justify-center shadow-sm">
-                        <div class="w-28 h-28 rounded-full bg-amber-100 border-4 border-white shadow-cute flex items-center justify-center relative mb-3 overflow-hidden">
-                            <svg viewBox="0 0 100 100" class="w-24 h-24">
-                                <circle cx="50" cy="50" r="32" fill="#FFFDF8"/>
-                                <ellipse cx="22" cy="42" rx="10" ry="22" fill="#8D5B4C"/>
-                                <ellipse cx="78" cy="42" rx="10" ry="22" fill="#8D5B4C"/>
-                                <ellipse cx="22" cy="45" rx="5" ry="12" fill="#FFB7B2"/>
-                                <ellipse cx="78" cy="45" rx="5" ry="12" fill="#FFB7B2"/>
-                                <circle cx="62" cy="42" r="11" fill="#D7A15C"/>
-                                <circle cx="38" cy="44" r="4" fill="#222"/>
-                                <circle cx="39" cy="42" r="1.5" fill="#FFF"/>
-                                <circle cx="62" cy="44" r="4" fill="#222"/>
-                                <circle cx="63" cy="42" r="1.5" fill="#FFF"/>
-                                <ellipse cx="50" cy="58" rx="14" ry="10" fill="#FFF2DF"/>
-                                <ellipse cx="50" cy="53" rx="4.5" ry="3.5" fill="#222"/>
-                                <path d="M 47 62 Q 50 68 53 62 Z" fill="#FF6B8B"/>
-                                <rect x="35" y="76" width="30" height="6" rx="3" fill="#FF3366"/>
-                                <circle cx="50" cy="82" r="3" fill="#FFD700"/>
-                            </svg>
-                        </div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <div class="lg:col-span-4 bg-gradient-to-b from-amber-50 to-pink-50 rounded-3xl p-6 border-2 border-pink-200 text-center flex flex-col items-center justify-center shadow-sm">
+                        <div class="w-28 h-28 rounded-full bg-amber-100 border-4 border-white shadow-cute flex items-center justify-center relative mb-3 overflow-hidden">
+                            <svg viewBox="0 0 100 100" class="w-24 h-24">
+                                <circle cx="50" cy="50" r="32" fill="#FFFDF8"/>
+                                <ellipse cx="22" cy="42" rx="10" ry="22" fill="#8D5B4C"/>
+                                <ellipse cx="78" cy="42" rx="10" ry="22" fill="#8D5B4C"/>
+                                <ellipse cx="22" cy="45" rx="5" ry="12" fill="#FFB7B2"/>
+                                <ellipse cx="78" cy="45" rx="5" ry="12" fill="#FFB7B2"/>
+                                <circle cx="62" cy="42" r="11" fill="#D7A15C"/>
+                                <circle cx="38" cy="44" r="4" fill="#222"/>
+                                <circle cx="39" cy="42" r="1.5" fill="#FFF"/>
+                                <circle cx="62" cy="44" r="4" fill="#222"/>
+                                <circle cx="63" cy="42" r="1.5" fill="#FFF"/>
+                                <ellipse cx="50" cy="58" rx="14" ry="10" fill="#FFF2DF"/>
+                                <ellipse cx="50" cy="53" rx="4.5" ry="3.5" fill="#222"/>
+                                <path d="M 47 62 Q 50 68 53 62 Z" fill="#FF6B8B"/>
+                                <rect x="35" y="76" width="30" height="6" rx="3" fill="#FF3366"/>
+                                <circle cx="50" cy="82" r="3" fill="#FFD700"/>
+                            </svg>
+                        </div>
 
-                        <h4 class="text-xl font-bold font-bubble text-gray-800">Doggy 🐶</h4>
-                        <span class="text-[11px] font-bold text-pink-600 bg-white px-3 py-1 rounded-full border border-pink-200 mt-1 shadow-xs">Guardián de Safe Paws</span>
+                        <h4 class="text-xl font-bold font-bubble text-gray-800">Doggy 🐶</h4>
+                        <span class="text-[11px] font-bold text-pink-600 bg-white px-3 py-1 rounded-full border border-pink-200 mt-1 shadow-xs">Guardián de Safe Paws</span>
 
-                        <div class="mt-3 px-3 py-1 rounded-xl bg-purple-100 text-purple-700 text-[10px] font-bold border border-purple-200 flex items-center justify-center gap-1.5">
-                            <span>✨ Potenciado por Gemini AI</span>
-                        </div>
+                        <div class="mt-3 px-3 py-1 rounded-xl bg-purple-100 text-purple-700 text-[10px] font-bold border border-purple-200 flex items-center justify-center gap-1.5">
+                            <span>✨ Potenciado por Gemini AI</span>
+                        </div>
 
-                        <div class="w-full mt-4 space-y-2 text-left">
-                            <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Preguntas Frecuentes:</div>
-                            <button onclick="askPresetQuestion('¿Por qué tiemblas cuando hace frío en la casita?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
-                                ❓ ¿Por qué tiemblas cuando hace frío?
-                            </button>
-                            <button onclick="askPresetQuestion('¿Cómo sabe el sensor DHT11 qué temperatura hace?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
-                                ❓ ¿Cómo funciona tu sensor DHT11?
-                            </button>
-                            <button onclick="askPresetQuestion('¿Cómo podemos ayudar a los perritos de la calle cuando hace frío o calor?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
-                                ❓ ¿Cómo ayudar a los perritos de la calle?
-                            </button>
-                        </div>
-                    </div>
+                        <div class="w-full mt-4 space-y-2 text-left">
+                            <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Preguntas Frecuentes:</div>
+                            <button onclick="askPresetQuestion('¿Por qué tiemblas cuando hace frío en la casita?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
+                                ❓ ¿Por qué tiemblas cuando hace frío?
+                            </button>
+                            <button onclick="askPresetQuestion('¿Cómo sabe el sensor DHT11 qué temperatura hace?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
+                                ❓ ¿Cómo funciona tu sensor DHT11?
+                            </button>
+                            <button onclick="askPresetQuestion('¿Cómo podemos ayudar a los perritos de la calle cuando hace frío o calor?')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-pink-100 text-xs text-pink-700 font-semibold border border-pink-200 transition-all btn-bounce shadow-xs">
+                                ❓ ¿Cómo ayudar a los perritos de la calle?
+                            </button>
+                        </div>
+                    </div>
 
-                    <div class="lg:col-span-8 bg-pink-50/50 rounded-3xl p-4 md:p-6 border-2 border-pink-200 shadow-inner flex flex-col h-[480px]">
-                        <div id="ai-chat-box" class="flex-grow overflow-y-auto space-y-4 pr-2 mb-4">
-                            <div class="flex gap-3 items-start">
-                                <div class="w-9 h-9 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-lg flex-shrink-0 shadow-xs">🐶</div>
-                                <div class="bg-white p-4 rounded-2xl border border-pink-200 text-sm text-gray-800 shadow-sm leading-relaxed">
-                                    ¡Hola amigo! Soy Doggy 🐾 Potenciado por <b>Gemini AI</b>. ¿Tienes preguntas sobre el clima, la temperatura o cómo cuidar a los perritos? ¡Escríbeme abajo o toca una pregunta rápida!
-                                </div>
-                            </div>
-                        </div>
+                    <div class="lg:col-span-8 bg-pink-50/50 rounded-3xl p-4 md:p-6 border-2 border-pink-200 shadow-inner flex flex-col h-[480px]">
+                        <div id="ai-chat-box" class="flex-grow overflow-y-auto space-y-4 pr-2 mb-4">
+                            <div class="flex gap-3 items-start">
+                                <div class="w-9 h-9 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-lg flex-shrink-0 shadow-xs">🐶</div>
+                                <div class="bg-white p-4 rounded-2xl border border-pink-200 text-sm text-gray-800 shadow-sm leading-relaxed">
+                                    ¡Hola amigo! Soy Doggy 🐾 Potenciado por <b>Gemini AI</b>. ¿Tienes preguntas sobre el clima, la temperatura o cómo cuidar a los perritos? ¡Escríbeme abajo o toca una pregunta rápida!
+                                </div>
+                            </div>
+                        </div>
 
-                        <div class="flex gap-2">
-                            <input type="text" id="ai-user-input" placeholder="Pregúntale lo que quieras a Doggy..." class="flex-grow p-3.5 rounded-2xl border-2 border-pink-200 text-sm font-medium focus:outline-none focus:border-bright-pink bg-white shadow-xs">
-                            <button onclick="sendDoggyChat()" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-bright-pink to-bubble-pink text-white font-bold font-bubble shadow-md hover:scale-105 active:scale-95 transition-all text-sm btn-bounce">
-                                Enviar 🚀
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <div class="flex gap-2">
+                            <input type="text" id="ai-user-input" placeholder="Pregúntale lo que quieras a Doggy..." class="flex-grow p-3.5 rounded-2xl border-2 border-pink-200 text-sm font-medium focus:outline-none focus:border-bright-pink bg-white shadow-xs">
+                            <button onclick="sendDoggyChat()" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-bright-pink to-bubble-pink text-white font-bold font-bubble shadow-md hover:scale-105 active:scale-95 transition-all text-sm btn-bounce">
+                                Enviar 🚀
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- TAB 4: CIRCUITO ELECTRÓNICO -->
-        <section id="tab-circuito" class="tab-content hidden animate-fade-in-up">
-            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white">
-                <div class="text-center mb-8">
-                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Electrónica Integrada</span>
-                    <h3 class="text-3xl md:text-4xl font-extrabold font-bubble text-gray-800 mt-2">El Circuito Electrónico de Safe Paws</h3>
-                    <p class="text-gray-600 mt-2 font-medium max-w-2xl mx-auto">Haz clic sobre los componentes del circuito para entender el flujo de energía y cómo viajan los impulsos eléctricos.</p>
-                </div>
+        <!-- TAB 4: CIRCUITO ELECTRÓNICO -->
+        <section id="tab-circuito" class="tab-content hidden animate-fade-in-up">
+            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Electrónica Integrada</span>
+                    <h3 class="text-3xl md:text-4xl font-extrabold font-bubble text-gray-800 mt-2">El Circuito Electrónico de Safe Paws</h3>
+                    <p class="text-gray-600 mt-2 font-medium max-w-2xl mx-auto">Haz clic sobre los componentes del circuito para entender el flujo de energía y cómo viajan los impulsos eléctricos.</p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="bg-pink-50/70 rounded-3xl p-6 border-2 border-pink-200 flex flex-col items-center relative overflow-hidden shadow-inner">
-                        <svg viewBox="0 0 500 350" class="w-full h-auto max-w-md drop-shadow-md">
-                            <rect x="50" y="80" width="400" height="200" rx="15" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="4"/>
-                            <line x1="70" y1="100" x2="430" y2="100" stroke="#FF85A1" stroke-width="2" stroke-dasharray="4 4"/>
-                            <line x1="70" y1="260" x2="430" y2="260" stroke="#FF3366" stroke-width="2" stroke-dasharray="4 4"/>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-pink-50/70 rounded-3xl p-6 border-2 border-pink-200 flex flex-col items-center relative overflow-hidden shadow-inner">
+                        <svg viewBox="0 0 500 350" class="w-full h-auto max-w-md drop-shadow-md">
+                            <rect x="50" y="80" width="400" height="200" rx="15" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="4"/>
+                            <line x1="70" y1="100" x2="430" y2="100" stroke="#FF85A1" stroke-width="2" stroke-dasharray="4 4"/>
+                            <line x1="70" y1="260" x2="430" y2="260" stroke="#FF3366" stroke-width="2" stroke-dasharray="4 4"/>
 
-                            <g onclick="explainComponent('esp32')" class="cursor-pointer transition-transform hover:scale-105">
-                                <rect x="80" y="120" width="100" height="120" rx="8" fill="#222" stroke="#FF3366" stroke-width="3"/>
-                                <rect x="95" y="130" width="70" height="40" rx="4" fill="#C0C0C0"/>
-                                <text x="130" y="155" fill="#333" font-size="10" font-weight="bold" text-anchor="middle">ESP32</text>
-                                <text x="130" y="210" fill="#00FFC6" font-size="9" font-family="monospace" text-anchor="middle">🧠 CEREBRO</text>
-                            </g>
+                            <g onclick="explainComponent('esp32')" class="cursor-pointer transition-transform hover:scale-105">
+                                <rect x="80" y="120" width="100" height="120" rx="8" fill="#222" stroke="#FF3366" stroke-width="3"/>
+                                <rect x="95" y="130" width="70" height="40" rx="4" fill="#C0C0C0"/>
+                                <text x="130" y="155" fill="#333" font-size="10" font-weight="bold" text-anchor="middle">ESP32</text>
+                                <text x="130" y="210" fill="#00FFC6" font-size="9" font-family="monospace" text-anchor="middle">🧠 CEREBRO</text>
+                            </g>
 
-                            <g onclick="explainComponent('dht11')" class="cursor-pointer transition-transform hover:scale-105">
-                                <rect x="230" y="110" width="60" height="70" rx="6" fill="#00A8E8" stroke="#0077B6" stroke-width="2"/>
-                                <text x="260" y="165" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">DHT11</text>
-                                <text x="260" y="100" fill="#0096C7" font-size="9" font-weight="bold" text-anchor="middle">🌡️ SENSOR</text>
-                                <line x1="245" y1="180" x2="245" y2="210" stroke="#333" stroke-width="3"/>
-                                <line x1="260" y1="180" x2="260" y2="210" stroke="#333" stroke-width="3"/>
-                                <line x1="275" y1="180" x2="275" y2="210" stroke="#333" stroke-width="3"/>
-                            </g>
+                            <g onclick="explainComponent('dht11')" class="cursor-pointer transition-transform hover:scale-105">
+                                <rect x="230" y="110" width="60" height="70" rx="6" fill="#00A8E8" stroke="#0077B6" stroke-width="2"/>
+                                <text x="260" y="165" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">DHT11</text>
+                                <text x="260" y="100" fill="#0096C7" font-size="9" font-weight="bold" text-anchor="middle">🌡️ SENSOR</text>
+                                <line x1="245" y1="180" x2="245" y2="210" stroke="#333" stroke-width="3"/>
+                                <line x1="260" y1="180" x2="260" y2="210" stroke="#333" stroke-width="3"/>
+                                <line x1="275" y1="180" x2="275" y2="210" stroke="#333" stroke-width="3"/>
+                            </g>
 
-                            <g onclick="explainComponent('oled')" class="cursor-pointer transition-transform hover:scale-105">
-                                <rect x="340" y="120" width="90" height="70" rx="6" fill="#111" stroke="#00F0FF" stroke-width="2"/>
-                                <rect x="350" y="130" width="70" height="45" rx="3" fill="#002233"/>
-                                <text x="385" y="150" fill="#00F0FF" font-size="8" font-family="monospace" text-anchor="middle">TEMP: 22°C</text>
-                                <text x="385
+                            <g onclick="explainComponent('oled')" class="cursor-pointer transition-transform hover:scale-105">
+                                <rect x="340" y="120" width="90" height="70" rx="6" fill="#111" stroke="#00F0FF" stroke-width="2"/>
+                                <rect x="350" y="130" width="70" height="45" rx="3" fill="#002233"/>
+                                <text x="385" y="150" fill="#00F0FF" font-size="8" font-family="monospace" text-anchor="middle">TEMP: 22°C</text>
+                                <text x="385" y="110" fill="#00B4D8" font-size="9" font-weight="bold" text-anchor="middle">🖥️ PANTALLA</text>
+                            </g>
+
+                            <path d="M 180 140 Q 210 90 245 110" fill="none" stroke="#FF5E7E" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 180 160 Q 260 70 350 120" fill="none" stroke="#FFD15C" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 180 180 Q 280 280 380 190" fill="none" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+
+                        <p class="text-xs font-bold text-pink-600 mt-3 animate-pulse">
+                            👆 Haz clic sobre cualquier componente para ver detalles
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div onclick="explainComponent('esp32')" class="bg-white p-4 rounded-2xl border-2 border-pink-200 shadow-xs flex items-start gap-3 cursor-pointer hover:bg-pink-50 transition-all btn-bounce">
+                            <span class="text-2xl p-2 bg-pink-100 rounded-xl">🧠</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 font-bubble">1. El Cerebro (ESP32)</h4>
+                                <p class="text-xs text-gray-600 mt-1">Lee los microimpulsos eléctricos y toma decisiones inteligentes para proyectar la temperatura.</p>
+                            </div>
+                        </div>
+
+                        <div onclick="explainComponent('dht11')" class="bg-white p-4 rounded-2xl border-2 border-blue-200 shadow-xs flex items-start gap-3 cursor-pointer hover:bg-blue-50 transition-all btn-bounce">
+                            <span class="text-2xl p-2 bg-blue-100 rounded-xl">🌡️</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 font-bubble">2. El Sensor Térmico (DHT11)</h4>
+                                <p class="text-xs text-gray-600 mt-1">Mide la resistencia del aire según la humedad y la temperatura del refugio.</p>
+                            </div>
+                        </div>
+
+                        <div onclick="explainComponent('oled')" class="bg-white p-4 rounded-2xl border-2 border-cyan-200 shadow-xs flex items-start gap-3 cursor-pointer hover:bg-cyan-50 transition-all btn-bounce">
+                            <span class="text-2xl p-2 bg-cyan-100 rounded-xl">🖥️</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 font-bubble">3. Monitor OLED (Display)</h4>
+                                <p class="text-xs text-gray-600 mt-1">Muestra instantáneamente los números en la pared de la casita para que los vecinos sepan el clima.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: CIENCIA Y FÍSICA -->
+        <section id="tab-ciencia" class="tab-content hidden animate-fade-in-up">
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold text-bright-pink uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Para Mentes Curiosas</span>
+                <h3 class="text-3xl md:text-5xl font-extrabold font-bubble text-gray-800 mt-2">¿Cómo Funciona la Energía y el Calor?</h3>
+                <p class="text-gray-600 mt-2 font-medium max-w-2xl mx-auto">Haz clic en los botones interactivos para descubrir los secretos del movimiento de las moléculas y la temperatura.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="glass-card rounded-3xl p-6 shadow-cute border-4 border-white bg-gradient-to-br from-pink-50 to-orange-50 space-y-4">
+                    <span class="text-4xl block">🔥</span>
+                    <h4 class="text-2xl font-bold font-bubble text-pink-700">Transferencia Térmica y Refugio</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed font-medium">
+                        El calor siempre viaja desde los lugares más calientes hacia los más fríos. Las paredes del refugio reducen el impacto del viento helado reteniendo aire caliente alrededor del perrito.
+                    </p>
+                    <button onclick="toggleCuriosity('curiosity-1')" class="px-4 py-2 bg-white rounded-xl text-xs font-bold text-pink-600 border border-pink-300 btn-bounce shadow-xs flex items-center gap-2">
+                        <span>🔍 ¿Curioso? Descubre la conducción</span>
+                    </button>
+                    <div id="curiosity-1" class="hidden p-3 bg-white/90 rounded-2xl text-xs text-pink-900 border border-pink-200 animate-fade-in-up">
+                        <b>Explicación molecular:</b> Las moléculas calientes se mueven muy rápido y chocan con sus vecinas. Las paredes de la casita frenan esos choques para que el calor corporal del perro no se escape al viento.
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 shadow-cute border-4 border-white bg-gradient-to-br from-purple-50 to-pink-50 space-y-4">
+                    <span class="text-4xl block">🧪</span>
+                    <h4 class="text-2xl font-bold font-bubble text-purple-700">Energía Térmica y Mantenimiento</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed font-medium">
+                        En climas helados, colocar cobijas o material aislante en el refugio ayuda a conservar la energía térmica liberada por el propio organismo del animal.
+                    </p>
+                    <button onclick="toggleCuriosity('curiosity-2')" class="px-4 py-2 bg-white rounded-xl text-xs font-bold text-purple-600 border border-purple-300 btn-bounce shadow-xs flex items-center gap-2">
+                        <span>🔍 ¿Curioso? Descubre el equilibrio energético</span>
+                    </button>
+                    <div id="curiosity-2" class="hidden p-3 bg-white/90 rounded-2xl text-xs text-purple-900 border border-purple-200 animate-fade-in-up">
+                        <b>Explicación energética:</b> Cuando el cuerpo del perrito produce calor, el refugio actúa como un escudo térmico que reduce la pérdida de energía hacia el exterior.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: ODS Y PLANETA (NUEVA PESTAÑA DE OBJETIVOS DE DESARROLLO SOSTENIBLE) -->
+        <section id="tab-ods" class="tab-content hidden animate-fade-in-up space-y-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest bg-emerald-100 px-4 py-1 rounded-full">Naciones Unidas & Agenda 2030</span>
+                <h3 class="text-3xl md:text-5xl font-extrabold font-bubble text-gray-800 mt-2">¿Qué son los ODS y por qué son importantes?</h3>
+                <p class="text-gray-600 mt-2 font-medium">
+                    Los **Objetivos de Desarrollo Sostenible (ODS)** son un llamado global establecido por la ONU para erradicar la pobreza, proteger la naturaleza y asegurar la paz y prosperidad para todos los seres vivos del planeta.
+                </p>
+            </div>
+
+            <!-- Featured ODS 15 & 11 Banner -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- ODS 15 Card -->
+                <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white bg-gradient-to-br from-emerald-50 via-teal-50 to-green-100 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-emerald-600 text-white font-bold font-bubble text-sm rounded-xl">ODS 15</span>
+                        <span class="text-3xl">🌿🌱🐾</span>
+                    </div>
+                    <h4 class="text-2xl font-extrabold font-bubble text-emerald-900">Vida de Ecosistemas Terrestres</h4>
+                    <p class="text-xs md:text-sm text-emerald-800 font-medium leading-relaxed">
+                        Este objetivo busca proteger, restablecer y promover el uso sostenible de los ecosistemas, combatir la desertificación y frenar la pérdida de biodiversidad en la Tierra.
+                    </p>
+                    <div class="bg-white/80 p-3.5 rounded-2xl border border-emerald-200 text-xs text-emerald-900 font-semibold space-y-1">
+                        <div class="text-emerald-700 font-bold uppercase text-[10px]">¿Cómo aporta Safe Paws al ODS 15?</div>
+                        <p>Protege la fauna urbana doméstica que vive vulnerable en la intemperie, promoviendo el respeto, la cohabitación armoniosa y el bienestar de las especies vulnerables.</p>
+                    </div>
+                </div>
+
+                <!-- ODS 11 Card -->
+                <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-amber-600 text-white font-bold font-bubble text-sm rounded-xl">ODS 11</span>
+                        <span class="text-3xl">🏙️🏡🤝</span>
+                    </div>
+                    <h4 class="text-2xl font-extrabold font-bubble text-amber-900">Ciudades y Comunidades Sostenibles</h4>
+                    <p class="text-xs md:text-sm text-amber-800 font-medium leading-relaxed">
+                        Busca que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y respetuosos con el entorno natural que los rodea.
+                    </p>
+                    <div class="bg-white/80 p-3.5 rounded-2xl border border-amber-200 text-xs text-amber-900 font-semibold space-y-1">
+                        <div class="text-amber-700 font-bold uppercase text-[10px]">¿Cómo aporta Safe Paws al ODS 11?</div>
+                        <p>Integra refugios comunitarios inteligentes en barrios y parques, transformando las ciudades en lugares más compasivos, educativos y tecnológicamente responsables.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Explanation Card -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-cute border-4 border-white bg-white space-y-6">
+                <h4 class="text-2xl font-extrabold font-bubble text-gray-800 text-center">¿Por qué es fundamental saber sobre esto?</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div class="p-4 bg-pink-50 rounded-2xl border border-pink-200">
+                        <div class="text-2xl mb-2">🌎</div>
+                        <h5 class="font-bold text-pink-700 text-sm font-bubble">Equilibrio del Planeta</h5>
+                        <p class="text-xs text-gray-600 mt-1 leading-relaxed font-medium">Todos los seres vivos estamos interconectados. Cuidar a los animales y la flora local mantiene la biodiversidad de nuestras comunidades.</p>
+                    </div>
+
+                    <div class="p-4 bg-purple-50 rounded-2xl border border-purple-200">
+                        <div class="text-2xl mb-2">🤖</div>
+                        <h5 class="font-bold text-purple-700 text-sm font-bubble">Tecnología con Propósito</h5>
+                        <p class="text-xs text-gray-600 mt-1 leading-relaxed font-medium">Aprender sobre sensores, circuitos y ciencia nos permite crear soluciones reales para problemas sociales y ambientales.</p>
+                    </div>
+
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+                        <div class="text-2xl mb-2">❤️</div>
+                        <h5 class="font-bold text-emerald-700 text-sm font-bubble">Empatía Ciudadana</h5>
+                        <p class="text-xs text-gray-600 mt-1 leading-relaxed font-medium">Fomenta el respeto por los vulnerables, impulsando a las nuevas generaciones a ser ciudadanos conscientes y protectores de la vida.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: MI COMPROMISO & CERTIFICADO OFICIAL -->
+        <section id="tab-compromiso" class="tab-content hidden animate-fade-in-up">
+            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-cute border-4 border-white text-center max-w-2xl mx-auto space-y-6">
+                <div class="w-20 h-20 bg-pink-100 rounded-full border-4 border-bright-pink mx-auto flex items-center justify-center text-4xl shadow-md">
+                    📜
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest bg-pink-100 px-4 py-1 rounded-full">Insignia Safe Paws</span>
+                    <h3 class="text-3xl font-extrabold font-bubble text-gray-800 mt-2">Compromiso de Protección Animal</h3>
+                    <p class="text-sm text-gray-600 mt-2 font-medium">
+                        Prometo respetar, proteger y ser empático con los perritos en situación de vulnerabilidad, apoyando iniciativas de refugio y cuidado comunitario.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-6 rounded-3xl border-2 border-pink-200 space-y-4 text-left">
+                    <label class="text-xs font-bold text-pink-700 uppercase tracking-wider block">Tu Nombre de Guardián de Animales:</label>
+                    <input type="text" id="pledge-name" placeholder="Escribe tu nombre completo..." class="w-full p-3.5 rounded-2xl border-2 border-pink-200 text-sm font-bold text-gray-800 bg-white shadow-xs focus:outline-none focus:border-bright-pink">
+
+                    <button onclick="signPledge()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-bright-pink to-bubble-pink text-white font-bold font-bubble text-sm shadow-md btn-bounce">
+                        ✍️ ¡Firmar y Generar mi Certificado Oficial!
+                    </button>
+                </div>
+
+                <!-- Printable & Downloadable Certificate Container -->
+                <div id="pledge-result" class="hidden space-y-4">
+                    <div id="printable-certificate" class="bg-gradient-to-br from-pink-50 via-white to-purple-50 border-8 border-pink-300 p-8 rounded-3xl shadow-xl text-center relative overflow-hidden">
+                        <!-- Decorative Frame Borders -->
+                        <div class="absolute top-2 left-2 text-2xl">🐾</div>
+                        <div class="absolute top-2 right-2 text-2xl">🐾</div>
+                        <div class="absolute bottom-2 left-2 text-2xl">🐾</div>
+                        <div class="absolute bottom-2 right-2 text-2xl">🐾</div>
+
+                        <div class="text-xs font-bold text-pink-500 uppercase tracking-widest mb-1">Certificado Oficial de Honor</div>
+                        <h4 class="text-3xl font-extrabold font-bubble text-bright-pink mb-2">GUARDIÁN DE ANIMALES SAFE PAWS</h4>
+                        <p class="text-xs text-gray-500 font-medium italic">Otorgado con mucho orgullo a:</p>
+                        
+                        <div id="cert-user-name" class="text-2xl md:text-3xl font-bold font-bubble text-gray-800 my-4 underline decoration-pink-400 decoration-wavy">
+                            [Tu Nombre]
+                        </div>
+
+                        <p class="text-xs text-gray-700 max-w-md mx-auto leading-relaxed font-medium">
+                            Por haber demostrado empatía, compromiso cívico, aprendizaje científico y apego a los Objetivos de Desarrollo Sostenible (ODS 15) para la protección de los perros vulnerables contra las temperaturas extremas.
+                        </p>
+
+                        <div class="mt-6 pt-4 border-t-2 border-pink-200 flex justify-between items-center text-left text-[11px] text-gray-600 font-bold">
+                            <div>
+                                <span class="block text-pink-600 font-bubble text-sm">Safe Paws Foundation 🐾</span>
+                                <span class="text-[10px] text-gray-400">Fecha: <span id="cert-date">2026</span></span>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 rounded-full bg-pink-100 border-2 border-pink-300 flex items-center justify-center text-xl mx-auto shadow-xs">🐶</div>
+                                <span class="text-[9px] text-pink-500 block mt-0.5">Firma: Doggy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action buttons for downloading and printing certificate -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="downloadCertificateImage()" id="btn-download-cert" class="flex-1 py-3.5 rounded-2xl bg-pink-600 hover:bg-pink-700 text-white font-bold font-bubble text-sm shadow-md btn-bounce flex items-center justify-center gap-2">
+                            <span>📥 Descargar Certificado (Imagen PNG)</span>
+                        </button>
+                        <button onclick="window.print()" class="flex-1 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold font-bubble text-sm shadow-md btn-bounce flex items-center justify-center gap-2">
+                            <span>🖨️ Imprimir / Guardar en PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- COMPONENT EXPLANATION POPUP MODAL -->
+    <div id="info-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-6 md:p-8 max-w-md w-full border-4 border-white shadow-cute animate-fade-in-up relative text-center">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-bold flex items-center justify-center hover:bg-pink-200">✕</button>
+            <div id="modal-icon" class="text-5xl mb-3">🧠</div>
+            <h4 id="modal-title" class="text-2xl font-bold font-bubble text-gray-800 mb-2">Título</h4>
+            <p id="modal-desc" class="text-sm text-gray-600 font-medium leading-relaxed mb-6">Descripción sencilla...</p>
+            <button onclick="closeModal()" class="w-full py-3 rounded-2xl bg-bright-pink text-white font-bold font-bubble text-sm shadow-md btn-bounce">
+                ¡Entendido! 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto px-4 py-6 glass-card border-t border-pink-200 text-center text-xs text-pink-600 font-semibold">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <span class="font-bold text-bright-pink">Safe Paws</span> — Refugio Interactivo © 2026
+            </div>
+            <div>
+                Creado con amor 💖 para la protección y bienestar de Doggy y perritos de la calle
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let scene, camera, renderer;
+        let houseGroup, doggyGroup;
+        let sunMesh, cloudsGroup, rainGroup;
+        let oledCanvas, oledTexture, oledCtx;
+        let currentTemp = 22;
+
+        window.onload = function() {
+            init3DScene();
+            setupEventListeners();
+            updateAllSystems(22);
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.add('active');
+
+            if (tabId === 'tab-simulador') {
+                setTimeout(onWindowResize, 100);
+            }
+        }
+
+        function toggleCuriosity(id) {
+            const elem = document.getElementById(id);
+            elem.classList.toggle('hidden');
+        }
+
+        function signPledge() {
+            const nameInput = document.getElementById('pledge-name');
+            const name = nameInput.value.trim();
+            if (!name) return;
+
+            document.getElementById('cert-user-name').innerText = name;
+            
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('cert-date').innerText = dateStr;
+
+            const res = document.getElementById('pledge-result');
+            res.classList.remove('hidden');
+            res.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Function to capture and download the certificate as an image directly to device
+        function downloadCertificateImage() {
+            const certElem = document.getElementById('printable-certificate');
+            const btn = document.getElementById('btn-download-cert');
+            const originalBtnText = btn.innerText;
+
+            btn.innerText = "⏳ Generando descarga...";
+            btn.disabled = true;
+
+            html2canvas(certElem, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const imageURI = canvas.toDataURL("image/png");
+                const downloadLink = document.createElement("a");
+                downloadLink.href = imageURI;
+                downloadLink.download = "Certificado_Guardián_SafePaws.png";
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+                btn.innerText = originalBtnText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error("Error al generar la imagen:", err);
+                btn.innerText = originalBtnText;
+                btn.disabled = false;
+            });
+        }
+
+        function createOledDynamicTexture() {
+            oledCanvas = document.createElement('canvas');
+            oledCanvas.width = 256;
+            oledCanvas.height = 128;
+            oledCtx = oledCanvas.getContext('2d');
+            
+            oledTexture = new THREE.CanvasTexture(oledCanvas);
+            updateOledTextureContent(22.0, 'CONFORT');
+            return oledTexture;
+        }
+
+        function updateOledTextureContent(temp, statusStr) {
+            if (!oledCtx) return;
+
+            oledCtx.fillStyle = '#001122';
+            oledCtx.fillRect(0, 0, 256, 128);
+
+            oledCtx.strokeStyle = '#00F0FF';
+            oledCtx.lineWidth = 6;
+            oledCtx.strokeRect(4, 4, 248, 120);
+
+            oledCtx.fillStyle = '#00F0FF';
+            oledCtx.font = 'bold 22px monospace';
+            oledCtx.fillText('SAFE PAWS OLED', 20, 32);
+
+            oledCtx.fillStyle = '#FF5E7E';
+            oledCtx.font = 'bold 30px monospace';
+            oledCtx.fillText('TEMP: ' + temp.toFixed(1) + 'C', 20, 72);
+
+            oledCtx.fillStyle = '#00FFC6';
+            oledCtx.font = 'bold 20px monospace';
+            oledCtx.fillText('ESTADO: ' + statusStr, 20, 108);
+
+            if (oledTexture) oledTexture.needsUpdate = true;
+        }
+
+        function init3DScene() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xE0F2FE);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 3.8, 9.5);
+            camera.lookAt(0, 0.9, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xfff5ea, 1.0);
+            dirLight.position.set(5, 10, 7);
+            dirLight.castShadow = true;
+            scene.add(dirLight);
+
+            const groundGeo = new THREE.CylinderGeometry(4.8, 4.8, 0.3, 32);
+            const groundMat = new THREE.MeshToonMaterial({ color: 0x81C784 });
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.position.y = -0.15;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            houseGroup = new THREE.Group();
+            scene.add(houseGroup);
+
+            buildDoghouse();
+            buildDoggy();
+            buildAtmosphereElements();
+
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            const canvasElem = renderer.domElement;
+
+            canvasElem.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            canvasElem.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const deltaMove = { x: e.clientX - previousMousePosition.x, y: e.clientY - previousMousePosition.y };
+                houseGroup.rotation.y += deltaMove.x * 0.008;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mouseup', () => { isDragging = false; });
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function buildDoghouse() {
+            const wallGeo = new THREE.BoxGeometry(2.6, 1.9, 2.8);
+            const wallMat = new THREE.MeshToonMaterial({ color: 0xFFD8CC });
+            const walls = new THREE.Mesh(wallGeo, wallMat);
+            walls.position.y = 0.95;
+            walls.castShadow = true;
+            walls.receiveShadow = true;
+            houseGroup.add(walls);
+
+            const doorFrameGeo = new THREE.BoxGeometry(1.2, 1.35, 0.1);
+            const doorFrameMat = new THREE.MeshToonMaterial({ color: 0xFF85A1 });
+            const doorFrame = new THREE.Mesh(doorFrameGeo, doorFrameMat);
+            doorFrame.position.set(0, 0.68, 1.41);
+            houseGroup.add(doorFrame);
+
+            const doorHoleGeo = new THREE.BoxGeometry(1.0, 1.2, 0.15);
+            const doorHoleMat = new THREE.MeshBasicMaterial({ color: 0x3E2723 });
+            const doorHole = new THREE.Mesh(doorHoleGeo, doorHoleMat);
+            doorHole.position.set(0, 0.6, 1.38);
+            houseGroup.add(doorHole);
+
+            // Roof
+            const roofWidth = 3.0;
+            const roofLength = 3.2;
+            const roofHeight = 1.0;
+
+            const roofShape = new THREE.Shape();
+            roofShape.moveTo(-roofWidth / 2, 0);
+            roofShape.lineTo(roofWidth / 2, 0);
+            roofShape.lineTo(0, roofHeight);
+            roofShape.closePath();
+
+            const extrudeSettings = { depth: roofLength, bevelEnabled: false };
+            const roofGeo = new THREE.ExtrudeGeometry(roofShape, extrudeSettings);
+            const roofMat = new THREE.MeshToonMaterial({ color: 0xFF5E7E });
+
+            const roofMesh = new THREE.Mesh(roofGeo, roofMat);
+            roofMesh.position.set(0, 1.9, -roofLength / 2);
+            roofMesh.castShadow = true;
+            houseGroup.add(roofMesh);
+
+            // Side Window
+            const windowFrameGeo = new THREE.BoxGeometry(0.08, 0.8, 0.8);
+            const windowFrameMat = new THREE.MeshToonMaterial({ color: 0xFFFFFF });
+            const windowFrame = new THREE.Mesh(windowFrameGeo, windowFrameMat);
+            windowFrame.position.set(1.31, 1.2, 0);
+            houseGroup.add(windowFrame);
+
+            const windowGlassGeo = new THREE.BoxGeometry(0.09, 0.6, 0.6);
+            const windowGlassMat = new THREE.MeshBasicMaterial({ color: 0x80DEEA });
+            const windowGlass = new THREE.Mesh(windowGlassGeo, windowGlassMat);
+            windowGlass.position.set(1.31, 1.2, 0);
+            houseGroup.add(windowGlass);
+
+            // Side OLED Display Screen
+            const oledGeo = new THREE.BoxGeometry(0.08, 0.75, 1.2);
+            const dynamicTexture = createOledDynamicTexture();
+            const oledMat = new THREE.MeshBasicMaterial({ map: dynamicTexture });
+            const oledMesh = new THREE.Mesh(oledGeo, oledMat);
+            oledMesh.position.set(-1.31, 1.1, 0);
+            houseGroup.add(oledMesh);
+        }
+
+        function buildDoggy() {
+            doggyGroup = new THREE.Group();
+
+            const furWhiteMat = new THREE.MeshToonMaterial({ color: 0xFFFDF8 });
+            const patchBrownMat = new THREE.MeshToonMaterial({ color: 0x8D5B4C });
+            const snoutMat = new THREE.MeshToonMaterial({ color: 0xFFF2DF });
+            const collarMat = new THREE.MeshToonMaterial({ color: 0xFF3366 });
+
+            const headGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            const head = new THREE.Mesh(headGeo, furWhiteMat);
+            head.position.y = 0.58;
+            head.castShadow = true;
+            doggyGroup.add(head);
+
+            const patchGeo = new THREE.SphereGeometry(0.22, 12, 12);
+            const patch = new THREE.Mesh(patchGeo, patchBrownMat);
+            patch.position.set(0.12, 0.65, 0.22);
+            patch.scale.set(1, 1, 0.5);
+            doggyGroup.add(patch);
+
+            const snoutGeo = new THREE.SphereGeometry(0.2, 12, 12);
+            const snout = new THREE.Mesh(snoutGeo, snoutMat);
+            snout.position.set(0, 0.52, 0.3);
+            snout.scale.set(1, 0.8, 1);
+            doggyGroup.add(snout);
+
+            const noseGeo = new THREE.SphereGeometry(0.06, 8, 8);
+            const noseMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
+            const nose = new THREE.Mesh(noseGeo, noseMat);
+            nose.position.set(0, 0.56, 0.47);
+            doggyGroup.add(nose);
+
+            const earGeo = new THREE.SphereGeometry(0.18, 12, 12);
+            const earLeft = new THREE.Mesh(earGeo, patchBrownMat);
+            earLeft.position.set(-0.36, 0.62, 0.05);
+            earLeft.scale.set(0.6, 1.6, 0.8);
+            doggyGroup.add(earLeft);
+
+            const earRight = new THREE.Mesh(earGeo, patchBrownMat);
+            earRight.position.set(0.36, 0.62, 0.05);
+            earRight.scale.set(0.6, 1.6, 0.8);
+            doggyGroup.add(earRight);
+
+            const eyeGeo = new THREE.SphereGeometry(0.065, 10, 10);
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x050505 });
+            const eyeLeft = new THREE.Mesh(eyeGeo, eyeMat);
+            eyeLeft.position.set(-0.15, 0.63, 0.33);
+            doggyGroup.add(eyeLeft);
+
+            const eyeRight = new THREE.Mesh(eyeGeo, eyeMat);
+            eyeRight.position.set(0.15, 0.63, 0.33);
+            doggyGroup.add(eyeRight);
+
+            const bodyGeo = new THREE.SphereGeometry(0.35, 16, 16);
+            const body = new THREE.Mesh(bodyGeo, furWhiteMat);
+            body.position.y = 0.24;
+            body.scale.set(1, 1.1, 1);
+            body.castShadow = true;
+            doggyGroup.add(body);
+
+            const collarGeo = new THREE.TorusGeometry(0.28, 0.05, 8, 16);
+            const collar = new THREE.Mesh(collarGeo, collarMat);
+            collar.position.set(0, 0.38, 0);
+            collar.rotation.x = Math.PI / 2;
+            doggyGroup.add(collar);
+
+            doggyGroup.position.set(0, 0.1, 1.32);
+            houseGroup.add(doggyGroup);
+        }
+
+        function buildAtmosphereElements() {
+            const sunGeo = new THREE.SphereGeometry(0.6, 16, 16);
+            const sunMat = new THREE.MeshBasicMaterial({ color: 0xFFD54F });
+            sunMesh = new THREE.Mesh(sunGeo, sunMat);
+            sunMesh.position.set(3.2, 3.2, -2.0);
+            scene.add(sunMesh);
+
+            cloudsGroup = new THREE.Group();
+            const cloudMat = new THREE.MeshToonMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.9 });
+            
+            for (let i = 0; i < 3; i++) {
+                const cloudPart = new THREE.Mesh(new THREE.SphereGeometry(0.4, 12, 12), cloudMat);
+                cloudPart.position.set(-2.5 + i * 0.4, 3.4, -1.5);
+                cloudsGroup.add(cloudPart);
+            }
+            scene.add(cloudsGroup);
+
+            rainGroup = new THREE.Group();
+            const rainMat = new THREE.MeshBasicMaterial({ color: 0x4FC3F7 });
+            for (let i = 0; i < 35; i++) {
+                const drop = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.3), rainMat);
+                drop.position.set((Math.random() - 0.5) * 6, Math.random() * 4, (Math.random() - 0.5) * 6);
+                rainGroup.add(drop);
+            }
+            rainGroup.visible = false;
+            scene.add(rainGroup);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (houseGroup) {
+                houseGroup.rotation.y += 0.002;
+            }
+
+            if (doggyGroup) {
+                doggyGroup.position.y = 0.1 + Math.sin(Date.now() * 0.003) * 0.02;
+            }
+
+            if (rainGroup && rainGroup.visible) {
+                rainGroup.children.forEach(drop => {
+                    drop.position.y -= 0.1;
+                    if (drop.position.y < 0) drop.position.y = 4;
+                });
+            }
+
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            if (!container || !renderer || !camera) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function setupEventListeners() {
+            const slider = document.getElementById('temp-slider');
+            if (slider) {
+                slider.addEventListener('input', (e) => {
+                    const val = parseFloat(e.target.value);
+                    updateAllSystems(val);
+                });
+            }
+
+            const chatInput = document.getElementById('ai-user-input');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        sendDoggyChat();
+                    }
+                });
+            }
+        }
+
+        function setTemp(val) {
+            document.getElementById('temp-slider').value = val;
+            updateAllSystems(val);
+        }
+
+        function updateAllSystems(temp) {
+            currentTemp = temp;
+
+            document.getElementById('temp-display').innerText = temp.toFixed(1) + ' °C';
+            document.getElementById('oled-temp').innerText = 'TEMP: ' + temp.toFixed(1) + '°C';
+
+            const hum = Math.min(85, Math.max(35, Math.round(80 - (temp * 1.2))));
+            document.getElementById('oled-hum').innerText = 'HUM : ' + hum + ' %';
+
+            const oledStatus = document.getElementById('oled-status');
+            const statusCard = document.getElementById('status-card');
+            const statusText = document.getElementById('status-text');
+            const doggyThought = document.getElementById('doggy-thought');
+
+            const weatherBadge = document.getElementById('weather-badge');
+            const weatherIcon = document.getElementById('weather-icon');
+            const weatherText = document.getElementById('weather-text');
+
+            const cardCold = document.getElementById('card-range-cold');
+            const cardComfort = document.getElementById('card-range-comfort');
+            const cardHot = document.getElementById('card-range-hot');
+
+            cardCold.classList.remove('ring-4', 'ring-blue-400');
+            cardComfort.classList.remove('ring-4', 'ring-emerald-400');
+            cardHot.classList.remove('ring-4', 'ring-amber-400');
+
+            let statusLabel = 'CONFORT';
+
+            if (temp < 15) {
+                statusLabel = 'FRIO!';
+                if (scene) scene.background = new THREE.Color(0xB0BEC5);
+                if (sunMesh) sunMesh.visible = false;
+                if (cloudsGroup) cloudsGroup.visible = true;
+                if (rainGroup) rainGroup.visible = true;
+
+                weatherBadge.className = 'absolute top-4 right-4 glass-card px-4 py-2 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 z-10 text-blue-600';
+                weatherIcon.innerText = '🌧️';
+                weatherText.innerText = 'Lluvia y Frío';
+
+                oledStatus.innerText = 'ALERTA: FRÍO';
+                oledStatus.className = 'mt-1 text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 inline-block animate-pulse';
+
+                statusCard.className = 'p-4 rounded-2xl bg-blue-50 border-2 border-blue-200 text-blue-800 text-sm font-medium';
+                statusText.innerHTML = '❄️ <b>Clima Frío Peligroso (< 15°C):</b> Los perritos de la calle corren riesgo de hipotermia. La casita los protege del viento y la lluvia, pero necesitan cobijas humanas para calentarse.';
+
+                doggyThought.innerHTML = '"¡Brrr, tengo mucho frío! 🥶 La casita me protege de la lluvia y el viento, pero agradecería una mantita."';
+
+                cardCold.classList.add('ring-4', 'ring-blue-400');
+
+                if (doggyGroup) doggyGroup.scale.set(0.9, 0.85, 0.9);
+
+            } else if (temp <= 25) {
+                statusLabel = 'CONFORT';
+                if (scene) scene.background = new THREE.Color(0xE0F2FE);
+                if (sunMesh) { sunMesh.visible = true; sunMesh.material.color.setHex(0xFFD54F); }
+                if (cloudsGroup) cloudsGroup.visible = true;
+                if (rainGroup) rainGroup.visible = false;
+
+                weatherBadge.className = 'absolute top-4 right-4 glass-card px-4 py-2 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 z-10 text-emerald-600';
+                weatherIcon.innerText = '🌸';
+                weatherText.innerText = 'Clima Templado';
+
+                oledStatus.innerText = 'ESTADO: CONFORT';
+                oledStatus.className = 'mt-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 inline-block';
+
+                statusCard.className = 'p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-800 text-sm font-medium';
+                statusText.innerHTML = '🌸 <b>Clima Ideal (15°C - 25°C):</b> Zona de confort térmico perfecto. Los perritos descansan felices sin gastar energía metabólica.';
+
+                doggyThought.innerHTML = '"¡Me siento de maravilla! 🌸 La temperatura está perfecta para una siestita suave."';
+
+                cardComfort.classList.add('ring-4', 'ring-emerald-400');
+
+                if (doggyGroup) doggyGroup.scale.set(1, 1, 1);
+
+            } else {
+                statusLabel = 'CALOR!';
+                if (scene) scene.background = new THREE.Color(0xFFECB3);
+                if (sunMesh) { sunMesh.visible = true; sunMesh.material.color.setHex(0xFF6F00); }
+                if (cloudsGroup) cloudsGroup.visible = false;
+                if (rainGroup) rainGroup.visible = false;
+
+                weatherBadge.className = 'absolute top-4 right-4 glass-card px-4 py-2 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 z-10 text-amber-600';
+                weatherIcon.innerText = '☀️';
+                weatherText.innerText = 'Día Caluroso';
+
+                oledStatus.innerText = 'ALERTA: CALOR';
+                oledStatus.className = 'mt-1 text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700 inline-block animate-pulse';
+
+                statusCard.className = 'p-4 rounded-2xl bg-amber-50 border-2 border-amber-200 text-amber-800 text-sm font-medium';
+                statusText.innerHTML = '☀️ <b>Calor Sofocante (> 25°C):</b> Riesgo de golpe de calor. La casita brinda sombra, pero los perritos necesitan tazones de agua fresca.';
+
+                doggyThought.innerHTML = '"¡Puff, qué calorcito! ☀️ Me alegra estar en la sombra, ¡y me encantaría un tazón de agua fresca!"';
+
+                cardHot.classList.add('ring-4', 'ring-amber-400');
+
+                if (doggyGroup) doggyGroup.scale.set(1.05, 1.05, 1.05);
+            }
+
+            updateOledTextureContent(temp, statusLabel);
+        }
+
+        function explainComponent(type) {
+            const modal = document.getElementById('info-modal');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+
+            if (type === 'esp32') {
+                icon.innerText = '🧠';
+                title.innerText = '1. El Cerebro (ESP32)';
+                desc.innerText = 'El ESP32 es como una pequeña computadora súper rápida. Recibe la información del sensor de clima, hace los cálculos de confort y le manda la orden a la pantalla OLED para mostrar los números.';
+            } else if (type === 'dht11') {
+                icon.innerText = '🌡️';
+                title.innerText = '2. El Sensor (DHT11)';
+                desc.innerText = 'El DHT11 es como una nariz electrónica que siente el aire. Tiene un pequeño termómetro dentro que cambia de resistencia eléctrica según el calor o el frío que haga en la casita.';
+            } else if (type === 'oled') {
+                icon.innerText = '🖥️';
+                title.innerText = '3. La Pantalla (OLED)';
+                desc.innerText = 'Esta pantallita brillante está incrustada en la pared exterior de la casita. Muestra en tiempo real la temperatura para que los vecinos sepan si un perrito de la calle necesita abrigo o agua.';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        function askPresetQuestion(questionText) {
+            document.getElementById('ai-user-input').value = questionText;
+            sendDoggyChat();
+        }
+
+        const apiKey = "AQ.Ab8RN6JknxUPhPgOnO9KmV9HePyb-nBgakVt5xO7WgaGjEsqEA";
+
+        async function sendDoggyChat() {
+            const inputEl = document.getElementById('ai-user-input');
+            const chatBox = document.getElementById('ai-chat-box');
+            const query = inputEl.value.trim();
+
+            if (!query) return;
+
+            chatBox.innerHTML += `
+                <div class="flex gap-3 items-start justify-end">
+                    <div class="bg-bright-pink text-white p-3.5 rounded-2xl text-sm font-medium shadow-xs max-w-[80%]">
+                        ${query}
+                    </div>
+                </div>
+            `;
+            inputEl.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const loadingId = 'loading-' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${loadingId}" class="flex gap-3 items-start">
+                    <div class="w-9 h-9 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-lg flex-shrink-0 shadow-xs">🐶</div>
+                    <div class="bg-white p-3.5 rounded-2xl border border-pink-200 text-sm text-pink-600 font-semibold animate-pulse">
+                        Doggy está pensando con la magia de Gemini AI... 🐾
+                    </div>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const systemPrompt = "Eres Doggy, un perrito tierno, educado y sabio que representa a los perritos en situación de calle y vive en la casita interactiva Safe Paws. Responde de forma amorosa, muy entusiasta, educacional y clara en 2 o 3 frases en español sin usar asteriscos de formato ni jerga compleja.";
+                const userPrompt = `El usuario pregunta: "${query}". La temperatura actual del refugio es ${currentTemp}°C.`;
+
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                const result = await response.json();
+                const replyText = result.candidates?.[0]?.content?.parts?.[0]?.text || "¡Guau! Tuve un pequeño problema pensando, ¿me repites la pregunta? 🐶";
+
+                document.getElementById(loadingId).outerHTML = `
+                    <div class="flex gap-3 items-start">
+                        <div class="w-9 h-9 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-lg flex-shrink-0 shadow-xs">🐶</div>
+                        <div class="bg-white p-4 rounded-2xl border border-pink-200 text-sm text-gray-800 shadow-sm leading-relaxed">
+                            ${replyText}
+                        </div>
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } catch (err) {
+                document.getElementById(loadingId).outerHTML = `
+                    <div class="flex gap-3 items-start">
+                        <div class="w-9 h-9 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-lg flex-shrink-0 shadow-xs">🐶</div>
+                        <div class="bg-white p-3.5 rounded-2xl border border-pink-200 text-sm text-red-500 font-semibold">
+                            ¡Guau! Hubo un error de conexión. ¡Inténtalo de nuevo!
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
